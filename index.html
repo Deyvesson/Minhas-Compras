@@ -19,11 +19,13 @@
   </nav>
 
   <div class="container text-center my-3 ">
-    <input class="form-control" type="text" id="product-name" placeholder="Nome do Produto" required>
-    <input step="0.01" class="form-control" type="number" id="product-price" placeholder="Preço do Produto" required>
-    <input step="1" class="form-control" type="number" id="product-quantity" placeholder="Quantidade" required>
-    <button class="btn btn-primary mt-2" id="add-product">
-      <i class="bi bi-plus"></i>Adicionar Produto</button>
+    <form id="newItemForm">
+      <input class="form-control" type="text" id="product-name" placeholder="Nome do Produto" required>
+      <input step="0.01" class="form-control" type="number" id="product-price" placeholder="Preço do Produto">
+      <input step="1" class="form-control" type="number" id="product-quantity" placeholder="Quantidade">
+      <button type="submit" class="btn btn-primary mt-2" id="add-product">
+        <i class="bi bi-plus"></i>Adicionar Produto</button>
+    </form>
   </div>
 
   <div class="product-list container">
@@ -42,10 +44,8 @@
         <div class="modal-body">
           <form id="editItemForm">
             <input class="form-control" type="text" id="edit-product-name" placeholder="Nome do Produto" required>
-            <input step="0.01" class="form-control" type="number" id="edit-product-price" placeholder="Preço do Produto"
-              required>
-            <input step="1" class="form-control" type="number" id="edit-product-quantity" placeholder="Quantidade"
-              required>
+            <input step="0.01" class="form-control" type="number" id="edit-product-price" placeholder="Preço do Produto">
+            <input step="1" class="form-control" type="number" id="edit-product-quantity" placeholder="Quantidade">
             <button type="submit" class="btn btn-primary mt-2">Salvar</button>
             <button type="button" class="btn btn-danger mt-2" data-bs-dismiss="modal">Cancelar</button>
           </form>

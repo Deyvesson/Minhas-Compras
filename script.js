@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const productNameInput = document.getElementById("product-name");
   const productPriceInput = document.getElementById("product-price");
   const productQuantityInput = document.getElementById("product-quantity");
-  const addProductButton = document.getElementById("add-product");
+  const newItemForm = document.getElementById('newItemForm');
   const productItemsList = document.getElementById("product-items");
   const totalPriceDisplay = document.getElementById("total-price");
   const editModal = new bootstrap.Modal(document.getElementById('editModal'));
@@ -17,42 +17,46 @@ document.addEventListener("DOMContentLoaded", () => {
     updateTotalPrice();
   }
 
-  // Adicionar novos produtos
-  addProductButton.addEventListener("click", () => {
+  // Adicionar novo produto a lista
+  newItemForm.addEventListener('submit', function (e) {
+    e.preventDefault();
     const productName = productNameInput.value;
     const productPrice = parseFloat(productPriceInput.value);
     const productQuantity = parseInt(productQuantityInput.value);
 
-    if (productName && productPrice && productQuantity) {
-      const product = { name: productName, price: productPrice, quantity: productQuantity };
-      products.push(product);
+    const product = { 
+      name: productName, 
+      price: productPrice || 0, 
+      quantity: productQuantity || 0 
+    };
 
-      updateProductList();
-      updateTotalPrice();
-    }
+    products.push(product);
 
-    productNameInput.value = "";
-    productPriceInput.value = "";
-    productQuantityInput.value = "";
+    newItemForm.reset()
+    updateProductList();
+    updateTotalPrice();
   });
 
+  // Atualizar o valor total
   function updateTotalPrice() {
     const total = products.reduce((sum, product) => sum + product.price * product.quantity, 0);
     totalPriceDisplay.textContent = `Valor Total: R$${total.toFixed(2)}`;
   }
 
+  //Remover o produto de acordo com o index
   function removeProduct(index) {
     products.splice(index, 1);
     updateProductList();
     updateTotalPrice();
   }
 
+  // Atualizar a lista de produtos
   function updateProductList() {
     productItemsList.innerHTML = "";
     products.forEach((product, index) => {
       const listItem = document.createElement("li");
       listItem.className = "list-group-item px-1"
-
+      // Adicioar o texto com nome e valor do item
       listItem.textContent = `${product.name} - R$${product.price.toFixed(2)} x ${product.quantity} = R$${(product.price * product.quantity).toFixed(2)}`
 
       //Edit Button
@@ -93,19 +97,17 @@ document.addEventListener("DOMContentLoaded", () => {
     editModal.show();
   }
 
-  //
+  // Editar produto
   const editItemForm = document.getElementById('editItemForm');
   editItemForm.addEventListener('submit', function (e) {
     e.preventDefault();
     if (products[currentEditIndex]) {
       products[currentEditIndex].name = document.getElementById('edit-product-name').value
-      products[currentEditIndex].price = parseFloat(document.getElementById('edit-product-price').value)
-      products[currentEditIndex].quantity = parseInt(document.getElementById('edit-product-quantity').value)
+      products[currentEditIndex].price = parseFloat(document.getElementById('edit-product-price').value) || 0
+      products[currentEditIndex].quantity = parseInt(document.getElementById('edit-product-quantity').value) || 0
       updateProductList();
       updateTotalPrice();
       editModal.hide();
     }
   });
-
-  updateProductList();
 });
