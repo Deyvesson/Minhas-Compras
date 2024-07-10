@@ -12,12 +12,48 @@
 
 <body>
 
+  <!-- Cabeçalho do site e Menu -->
   <nav class="navbar bg-primary" data-bs-theme="dark">
-    <div class="container-fluid d-flex justify-content-center">
-      <span class="navbar-brand mb-0 h1">Minhas Compras</span>
+    <div class="container-fluid d-flex justify-content-between align-items-center">
+      <span class="navbar-brand mb-0 h1 mx-auto text-white">Minhas Compras</span>
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="offcanvas offcanvas-end bg-light text-dark w-50" tabindex="-1" id="offcanvasNavbar">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasRightLabel">Menu</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"
+            style="filter: invert(0);"></button>
+        </div>
+        <div class="offcanvas-body">
+          <button type="button" class="btn btn-danger mt-2" style="--bs-btn-padding-x: 2.3rem;" data-bs-toggle="modal"
+            data-bs-target="#clearList">
+            <i class="bi bi-eraser"></i> Limpar Lista</button>
+        </div>
+      </div>
     </div>
   </nav>
 
+  <!-- Modal Para confirmar limpeza da lista-->
+  <div class="modal fade" id="clearList" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5">Limpar Lista</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Tem certeza que deseja limpar a lista completa ?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" id="buttonClearList">Sim</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Formulário para adicionar um novo Item -->
   <div class="container text-center my-3 ">
     <form id="newItemForm">
       <input class="form-control" type="text" id="product-name" placeholder="Nome do Produto" required>
@@ -28,6 +64,7 @@
     </form>
   </div>
 
+  <!-- Lista de Itens -->
   <div class="product-list container">
     <p class="fw-bolder ms-2" id="total-price">Valor Total: R$0.00</p>
     <ul class="list-group" id="product-items"></ul>
@@ -44,7 +81,8 @@
         <div class="modal-body">
           <form id="editItemForm">
             <input class="form-control" type="text" id="edit-product-name" placeholder="Nome do Produto" required>
-            <input step="0.01" class="form-control" type="number" id="edit-product-price" placeholder="Preço do Produto">
+            <input step="0.01" class="form-control" type="number" id="edit-product-price"
+              placeholder="Preço do Produto">
             <input step="1" class="form-control" type="number" id="edit-product-quantity" placeholder="Quantidade">
             <button type="submit" class="btn btn-primary mt-2">Salvar</button>
             <button type="button" class="btn btn-danger mt-2" data-bs-dismiss="modal">Cancelar</button>

@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const productItemsList = document.getElementById("product-items");
   const totalPriceDisplay = document.getElementById("total-price");
   const editModal = new bootstrap.Modal(document.getElementById('editModal'));
+  const buttonClearList = document.getElementById("buttonClearList");
   let currentEditIndex = undefined;
 
   let products = [];
@@ -24,10 +25,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const productPrice = parseFloat(productPriceInput.value);
     const productQuantity = parseInt(productQuantityInput.value);
 
-    const product = { 
-      name: productName, 
-      price: productPrice || 0, 
-      quantity: productQuantity || 0 
+    const product = {
+      name: productName,
+      price: productPrice || 0,
+      quantity: productQuantity || 0
     };
 
     products.push(product);
@@ -40,7 +41,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // Atualizar o valor total
   function updateTotalPrice() {
     const total = products.reduce((sum, product) => sum + product.price * product.quantity, 0);
-    totalPriceDisplay.textContent = `Valor Total: R$${total.toFixed(2)}`;
+    //totalPriceDisplay.textContent = `Valor Total: R$${total.toFixed(2)}`;
+    totalPriceDisplay.textContent = `Valor Total: ${total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}`;
   }
 
   //Remover o produto de acordo com o index
@@ -57,7 +59,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const listItem = document.createElement("li");
       listItem.className = "list-group-item px-1"
       // Adicioar o texto com nome e valor do item
-      listItem.textContent = `${product.name} - R$${product.price.toFixed(2)} x ${product.quantity} = R$${(product.price * product.quantity).toFixed(2)}`
+      //listItem.textContent = `${product.name} - R$${product.price.toFixed(2)} x ${product.quantity} = R$${(product.price * product.quantity).toFixed(2)}`
+      listItem.textContent = `${product.name} - ${product.price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })} x ${product.quantity} = ${(product.price * product.quantity).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}`
 
       //Edit Button
       const editButton = document.createElement('button');
@@ -110,4 +113,13 @@ document.addEventListener("DOMContentLoaded", () => {
       editModal.hide();
     }
   });
+
+  //Limpar Lista de produtos
+  buttonClearList.addEventListener("click", () => {
+    products = [];
+    updateProductList();
+    updateTotalPrice();
+    location.reload();
+  })
+
 });
